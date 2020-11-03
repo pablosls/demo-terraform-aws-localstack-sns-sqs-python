@@ -1,0 +1,18 @@
+-- start localstack with docker-compose 
+docker-compose up
+
+--health check
+http://localhost:4566/health
+
+-- list topics 
+aws --endpoint-url=http://localhost:4566 sns list-topics
+
+-- send message to a queue
+aws --endpoint-url=http://localhost:4576 sqs send-message --queue-url http://localhost:4576/123456789012/test_queue --message-body 'Test Message!'
+
+
+-- list queues 
+aws --endpoint-url=http://localhost:4566 sqs list-queues
+
+-- receive message without delete
+aws --endpoint-url=http://localhost:4576 sqs receive-message --queue-url http://localhost:4576/queue/user-updates-queue
